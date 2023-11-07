@@ -1,0 +1,45 @@
+.container .title {
+  color: #fff;
+  font-size: 20px;
+  font-family: 'Work Sans';
+  font-weight: 700;
+  text-align: center;
+  line-height: normal;
+}
+
+.title .query-text {
+  color: #f7d354;
+}
+
+.movies-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #1A1D29;
+}
+
+.movies-container div {
+  width: 100%;
+  color: #fff;
+  margin-bottom: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #111;
+  padding: 1rem;
+}
+
+.movies-container div img {
+  max-width: 100%;
+}
+
+.movies-container div h2 {
+  margin-bottom: 1.5rem;
+}
+
+.movies-container div svg {
+  color: #f7d354;
+}
