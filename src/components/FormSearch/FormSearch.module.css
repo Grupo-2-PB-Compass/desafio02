@@ -1,0 +1,24 @@
+.searchContainer {
+  display: flex;
+  background-color: #000;
+  padding: 0.75rem 1rem;
+  width: 100%;
+}
+
+.searchContainer input {
+  background-color: #000;
+  border: none;
+  width: 100%;
+  padding: 0.5rem;
+  font: message-box;
+}
+
+.inputText {
+  color: white;
+}
+
+.icon {
+  font-size: 1.2rem;
+  vertical-align: text-bottom;
+  background-color: #000;
+}

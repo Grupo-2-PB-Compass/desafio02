@@ -1,0 +1,19 @@
+.searchButton {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  color: #fff;
+  padding-left:0.5rem;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.searchButton:hover {
+  color: #02e7f5;
+}
