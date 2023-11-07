@@ -1,0 +1,27 @@
+:root {
+  --primary-500: #00386C;
+  --primary-400: #0063E5;
+  --primary-300: #037AEB;
+  --primary-200: #068DFF;
+  --primary-100: #67BDFF;
+
+  --secondary-200: #02E7F5;
+
+  --accent: #FFF;
+
+  --neutral-700: #101116;
+  --neutral-600: #1A1D29;
+  --neutral-500: #30333E;
+  --neutral-400: #5F6169;
+  --neutral-300: #74757D;
+  --neutral-200: #C8C9CB;
+  --neutral-100: #F9F9F9;
+  --neutral--100: #FFF;
+
+  --opacity-12: rgba(255, 255, 255, 0.12);
+  --opacity-10: rgba(0, 0, 0, 0.10);
+  --opacity-04: rgba(249, 249, 249, 0.40);
+  --opacity-white-10: rgba(255, 255, 255, 0.10);
+
+  
+}

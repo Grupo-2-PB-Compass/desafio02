@@ -1,0 +1,31 @@
+.loading-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: var(--neutral-600);
+}
+
+.circle {
+    width: 80px;
+    height: 80px;
+    animation: swapImages 700ms steps(5) infinite;
+}
+
+@keyframes swapImages {
+    0% {
+        background-image: url("../../assets/loading-circle/first-state.png");
+    }
+    25% {
+        background-image: url("../../assets/loading-circle/second-state.png");
+    }
+    50% {
+        background-image: url("../../assets/loading-circle/third-state.png");
+    }
+    75% {
+        background-image: url("../../assets/loading-circle/fourth-state.png");
+    }
+    100% {
+        background-image: url("../../assets/loading-circle/first-state.png");
+    }
+}

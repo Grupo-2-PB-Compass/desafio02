@@ -1,0 +1,24 @@
+.button-primary {
+    display: flex;
+    height: 48px;
+    padding: 0 48px;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    border-radius: 4px;
+    background-color: var(--primary-300);
+    color: var(--neutral-100);
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 1.76px;
+    font-family: 'Lato', sans-serif;
+}
+
+.button-primary:hover {
+    background-color: var(--primary-200);
+    cursor: pointer;
+}
+
+.button-primary:active {
+    background-color: var(--primary-500);
+}
