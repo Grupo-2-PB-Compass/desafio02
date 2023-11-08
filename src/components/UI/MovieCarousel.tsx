@@ -1,6 +1,8 @@
 import React from "react";
-import { Carousel } from "react-responsive-carousel";
-import './MovieCarousel.module.css';
+//@ts-ignore
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import "@splidejs/splide/dist/css/themes/splide-default.min.css";
+import "./MovieCarousel.module.css";
 
 const imagesURL = import.meta.env.VITE_IMG;
 
@@ -17,19 +19,27 @@ interface MovieCarouselProps {
 }
 
 const MovieCarousel: React.FC<MovieCarouselProps> = ({ movies }) => {
+  const splideOptions = {
+    type: "loop",
+    perPage: 10,
+    gap: "1rem",
+  };
+
   return (
-    <div className="movie-carousel">
-      <Carousel showArrows={true} showThumbs={false}>
+    <div className="catalogo">
+      <Splide options={splideOptions}>
         {movies.map((movie) => (
-          <div key={movie.id} className="carousel-card">
-            <img
-              src={imagesURL + movie.poster_path}
-              alt=""
-              className="carousel-image"
-            />
-          </div>
+          <SplideSlide key={movie.id}>
+            <div className="carousel-card">
+              <img
+                src={imagesURL + movie.poster_path}
+                alt=""
+                className="carousel-image"
+              />
+            </div>
+          </SplideSlide>
         ))}
-      </Carousel>
+      </Splide>
     </div>
   );
 };

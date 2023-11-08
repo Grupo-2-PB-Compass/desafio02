@@ -1,6 +1,9 @@
+.movie-carousel {
+  background-color: #353843;
+}
+
 .movie-card {
     background-color: #fff;
-    border-radius: 8px;
     border: 1px solid #353843;
     padding: 1rem;
     margin-bottom: 2.5rem;
@@ -9,5 +12,17 @@
     align-items: center; 
 }
   .movie-card img {
-    max-width: 100%;
+    max-width: 50%;
+    border-radius: 1%;
+  }
+
+  img {
+    border-radius: 8px;
+    border-style: solid;
+    border-color: var(--border, #358443);
+    flex-shrink: 0;
+    margin-right: none;
+    width: 240px;
+    height: 361px;
+    position: absolute;
   }

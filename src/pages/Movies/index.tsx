@@ -82,8 +82,8 @@ const Movies = () => {
           <h2>Filmes</h2>
           <ButtonRounded>Gêneros</ButtonRounded>
         </div>
-        <MovieCarousel movies={movies} />
       </Background>
+      
       {categories.map((category) => (
         <div className="container" key={category.title}>
           <h2 className="title">{category.title}</h2>
