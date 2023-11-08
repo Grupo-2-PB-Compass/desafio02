@@ -47,11 +47,11 @@ const Movies = () => {
   ];
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const getMovies = async (url: string) => {
+  const getMovies = async () => {
     try {
-      const res = await fetch(url);
-      const data = await res.json();
+      const data = await getPopular("movie");
       setMovies(data.results);
+      console.log(data.results);
     } catch (error) {
       console.error("Erro ao buscar filmes:", error);
     }
@@ -69,7 +69,9 @@ const Movies = () => {
   useEffect(() => {
     document.title = "Filmes";
     requestHighlitedMovie();
+    getMovies();
   }, []);
+
 
   return (
     isLoading ? <Loading/> :
