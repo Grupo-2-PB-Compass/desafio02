@@ -1,6 +1,6 @@
-import {MovieGenres} from "../components/Highlight/Highlight.tsx";
+import {Genres} from "../pages/Movies";
 
-export function getGenres(genres: MovieGenres[]) {
+export function getGenres(genres: Genres[]) {
     if (!genres) {
         return "";
     }

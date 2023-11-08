@@ -39,7 +39,7 @@ export async function manageToWatchList(account_id: string, media_type: string, 
 export async function getFavorite(account_id: number, type: string) {
     try {
         const response = await fetch(`https://api.themoviedb.org/3/account/${account_id}/favorite/${type}?language=pt-BR&page=1&sort_by=created_at.asc`, {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 accept: 'application/json',
                 'content-type': 'application/json',
@@ -57,7 +57,7 @@ export async function getFavorite(account_id: number, type: string) {
 export async function getToWatchList(account_id: number, type: string) {
     try {
         const response = await fetch(`https://api.themoviedb.org/3/account/${account_id}/watchlist/${type}?language=pt-BR&page=1&sort_by=created_at.asc`, {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 accept: 'application/json',
                 'content-type': 'application/json',

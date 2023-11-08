@@ -48,7 +48,7 @@ function TvShows() {
                     <Menu/>
 
                     <div className={classes.title}>
-                        <h2>Filmes</h2>
+                        <h2>Séries</h2>
                         <ButtonRounded>Gêneros</ButtonRounded>
                     </div>
 

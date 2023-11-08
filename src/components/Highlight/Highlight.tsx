@@ -6,7 +6,7 @@ import ButtonCircle from "../UI/ButtonCircle.tsx";
 import {IoMdStar} from "react-icons/io";
 import {IoAddOutline} from "react-icons/io5";
 import classes from "./Highlight.module.css";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {BsCheck2} from "react-icons/bs";
 import {
     getDuration,
@@ -19,8 +19,9 @@ import HighlightDescription from "./HighlightDescription.tsx";
 import {SerieProps} from "../../pages/TvShows";
 import {MovieProps} from "../../pages/Movies";
 import {manageFavorite, manageToWatchList} from "../../api/Account.ts";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {SessionState} from "../../store/session.ts";
+import {listActions, ListState} from "../../store/list.ts";
 
 export interface HighlightProps {
     data: MovieProps | SerieProps,
@@ -45,6 +46,19 @@ function Highlight(props: HighlightProps) {
     const [favorite, setFavorite] = useState(false);
     const [added, setAdded] = useState(false);
     const account_id = useSelector((state: SessionState) => state.session.accountId);
+    const favoriteData = useSelector((state: ListState) => props.isMovie ? state.list.favoriteMovies : state.list.favoriteTvShows);
+    const toWatchListData = useSelector((state: ListState) => props.isMovie ? state.list.toWatchMovies : state.list.toWatchTvShows);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (favoriteData && favoriteData.includes(props.data.id)) {
+            setFavorite(true);
+        }
+
+        if (toWatchListData && toWatchListData.includes(props.data.id)) {
+            setAdded(true);
+        }
+    }, []);
 
     function secondParameter() {
         switch (props.type) {
@@ -62,12 +76,42 @@ function Highlight(props: HighlightProps) {
     }
 
     async function toggleFavorite() {
-        await manageFavorite(account_id, props.isMovie ? 'movie' : 'tv', props.data.id, !favorite)
+        const id: number = props.data.id;
+        await manageFavorite(account_id, props.isMovie ? 'movie' : 'tv', id, !favorite)
+
+        if (!favorite) {
+            dispatch(
+                props.isMovie
+                    ? listActions.addFavoriteMovie({id})
+                    : listActions.addFavoriteTvShow({id})
+            );
+        } else {
+            dispatch(
+                props.isMovie
+                    ? listActions.removeFavoriteMovie({id})
+                    : listActions.removeFavoriteTvShow({id})
+            );
+        }
         setFavorite((prevState) => !prevState);
     }
 
     async function toggleAdded() {
-        await manageToWatchList(account_id, props.isMovie ? 'movie' : 'tv', props.data.id, !added)
+        const id: number = props.data.id;
+        await manageToWatchList(account_id, props.isMovie ? 'movie' : 'tv', id, !added)
+
+        if (!added) {
+            dispatch(
+                props.isMovie
+                    ? listActions.addToWatchMovie({id})
+                    : listActions.addToWatchTvShow({id})
+            );
+        } else {
+            dispatch(
+                props.isMovie
+                    ? listActions.removeToWatchMovie({id})
+                    : listActions.removeToWatchTvShow({id})
+            );
+        }
         setAdded((prevState) => !prevState);
     }
 
