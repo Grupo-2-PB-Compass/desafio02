@@ -21,7 +21,7 @@ export default function Menu() {
   return (
     <header>
       <nav className={styles.navbar}>
-      <MenuLink to="/">
+        <MenuLink to="/">
           <img src={logo} alt="logo" />
         </MenuLink>
         <MenuLink to="/">
@@ -37,14 +37,16 @@ export default function Menu() {
         <MenuLink to="/actors">
           <AiFillStar className={styles.icon} /> Celebridades
         </MenuLink>
-        
       </nav>
+
       <nav className={styles.navbar}>
-      {!isFormVisible && (
+        {!isFormVisible && (
           <>
-            <Button onClick={toggleFormVisibility}>
-              <BiSearch className={styles.icon} /> Buscar
-            </Button>
+            <MenuLink>
+              <Button onClick={toggleFormVisibility}>
+                <BiSearch className={styles.icon} /> Buscar
+              </Button>
+            </MenuLink>
             <MenuLink to="/mylist">
               <FaPlus className={styles.icon} /> Minha Lista
             </MenuLink>

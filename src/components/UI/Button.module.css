@@ -35,7 +35,7 @@
 .button-secondary {
     background-color: var(--accent);
     color: var(--neutral-600);
-    font-family: Work Sans, sans-serif;
+    font-family: 'Work Sans', sans-serif;
 }
 
 .button-secondary:hover {
@@ -46,7 +46,7 @@
     background-color: var(--opacity-10);
     border: 1px solid var(--accent);
     color: var(--accent);
-    font-family: Work Sans, sans-serif;
+    font-family: 'Work Sans', sans-serif;
 }
 
 .button-outlined:hover {
@@ -67,12 +67,26 @@
     background: var(--accent);
 }
 
-.button-circle-checked {
+.button-checked {
     color: var(--secondary-200);
     background-color: var(--opacity-10);
 }
 
-.button-circle-checked:hover {
+.button-checked:hover {
     color: var(--secondary-200);
     background-color: var(--opacity-60);
+}
+
+.button-rounded {
+    color: var(--accent);
+    border-radius: 100px;
+    border: 1px solid #F0EAEA;
+    background: rgba(12, 13, 19, 0.50);
+    text-transform: none;
+    font-family: 'Lato', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 26px;
+    height: 36px;
+    padding: 0 24px;
 }

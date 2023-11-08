@@ -1,11 +1,14 @@
 import Background from "../../components/UI/Background.tsx";
-import Highlight, {MovieGenres} from "../../components/Highlight/Highlight.tsx";
+import Highlight from "../../components/Highlight/Highlight.tsx";
 import Menu from "../../components/Menu";
 import {useEffect, useState} from "react";
 import {getPopular} from "../../api/Lists.ts";
 import {chooseItem} from "../../utils/Lists.ts";
 import {getDetails} from "../../api/Details.ts";
 import Loading from "../../components/UI/Loading.tsx";
+import classes from "../Movies/Movies.module.css";
+import ButtonRounded from "../../components/UI/ButtonRounded.tsx";
+import {Genres} from "../Movies";
 
 export interface SerieProps {
     id: number;
@@ -17,7 +20,7 @@ export interface SerieProps {
     vote_average: number;
     first_air_date: string;
     runtime: number;
-    genres: MovieGenres[];
+    genres: Genres[];
 }
 
 function TvShows() {
@@ -25,6 +28,7 @@ function TvShows() {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        document.title = "Séries"
         requestHighlitedSeries();
     }, []);
 
@@ -40,8 +44,14 @@ function TvShows() {
     return (
         isLoading ? <Loading/> :
             <>
-                <Background image={serie!.backdrop_path}>
+                <Background image={serie.backdrop_path}>
                     <Menu/>
+
+                    <div className={classes.title}>
+                        <h2>Filmes</h2>
+                        <ButtonRounded>Gêneros</ButtonRounded>
+                    </div>
+
                     <Highlight
                         data={serie!}
                         type={'numberOfSeasons'}

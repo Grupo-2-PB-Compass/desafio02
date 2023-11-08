@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import React from "react";
 import "./MovieCard.module.css";
+
 const imagesURL = import.meta.env.VITE_IMG;
 
 interface Movie {
@@ -11,18 +12,12 @@ interface Movie {
 
 interface MovieCardProps {
   movie: Movie;
-  showLink?: boolean;
 }
 
-const MovieCard = ({ movie = true }: MovieCardProps) => {
+const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   return (
     <div className="movie-card">
       <img src={imagesURL + movie.poster_path} alt={movie.title} />
-      {showLink && (
-        <Link to={`/movie/${movie.id}`} className="movie-details-link">
-          Detalhes
-        </Link>
-      )}
     </div>
   );
 };

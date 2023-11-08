@@ -17,23 +17,10 @@ import {
 } from "../../utils/Details.tsx";
 import HighlightDescription from "./HighlightDescription.tsx";
 import {SerieProps} from "../../pages/TvShows";
-
-export interface MovieGenres {
-    id: number;
-    name: string;
-}
-
-export interface MovieProps {
-    title: string;
-    release_date: string;
-    runtime: number;
-    genres: MovieGenres[];
-    overview: string;
-    backdrop_path: string;
-    number_of_seasons: number;
-    number_of_movies: number;
-    vote_average: number;
-}
+import {MovieProps} from "../../pages/Movies";
+import {manageFavorite, manageToWatchList} from "../../api/Account.ts";
+import {useSelector} from "react-redux";
+import {SessionState} from "../../store/session.ts";
 
 export interface HighlightProps {
     data: MovieProps | SerieProps,
@@ -57,6 +44,7 @@ function Highlight(props: HighlightProps) {
     const rating = getRating(props.data.vote_average);
     const [favorite, setFavorite] = useState(false);
     const [added, setAdded] = useState(false);
+    const account_id = useSelector((state: SessionState) => state.session.accountId);
 
     function secondParameter() {
         switch (props.type) {
@@ -73,16 +61,18 @@ function Highlight(props: HighlightProps) {
         }
     }
 
-    function toggleFavorite() {
+    async function toggleFavorite() {
+        await manageFavorite(account_id, props.isMovie ? 'movie' : 'tv', props.data.id, !favorite)
         setFavorite((prevState) => !prevState);
     }
 
-    function toggleAdded() {
+    async function toggleAdded() {
+        await manageToWatchList(account_id, props.isMovie ? 'movie' : 'tv', props.data.id, !added)
         setAdded((prevState) => !prevState);
     }
 
     return (
-        <section>
+        <section className={classes['section-highlight']}>
             <div className={classes.info}>
                 <h1>{props.isMovie ? (props.data as MovieProps).title : (props.data as SerieProps).name}</h1>
                 <p className="body-regular">{releaseYear} • {secondParameter()}</p>

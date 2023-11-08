@@ -3,7 +3,7 @@ import {useEffect} from "react";
 import {sessionActions} from "../../store/session.ts";
 import {useDispatch} from "react-redux";
 import Loading from "../../components/UI/Loading";
-import {createGuestSession, createSession} from "../../api/Login.ts";
+import {createGuestSession, createSession, getAccountID} from "../../api/Login.ts";
 
 function ApprovedPage() {
     const [queryParameters] = useSearchParams();
@@ -15,13 +15,14 @@ function ApprovedPage() {
             try {
                 if (!queryParameters.get('request_token')) {
                     const guest_session_id = await createGuestSession();
-                    setSessionId(guest_session_id, true);
+                    setSession(null, guest_session_id, true);
                     setTimeout(() => {
                         navigate('/');
                     }, 1000);
                 } else {
                     const session_id = await createSession(queryParameters.get('request_token')!);
-                    setSessionId(session_id, false);
+                    const account_id = await getAccountID(session_id);
+                    setSession(account_id, session_id, false);
                     setTimeout(() => {
                         navigate('/');
                     }, 1000);
@@ -34,8 +35,8 @@ function ApprovedPage() {
         fetchSession();
     }, []);
 
-    function setSessionId(session_id: string, is_guest: boolean) {
-        dispatch(sessionActions.login({session_id, is_guest}));
+    function setSession(account_id: string | null, session_id: string, is_guest: boolean) {
+        dispatch(sessionActions.login({account_id, session_id, is_guest}));
     }
 
     return (

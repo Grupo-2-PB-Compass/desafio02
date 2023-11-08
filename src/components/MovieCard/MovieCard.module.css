@@ -6,40 +6,8 @@
     margin-bottom: 2.5rem;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centraliza o conteúdo verticalmente */
-  }
-  
+    align-items: center; 
+}
   .movie-card img {
     max-width: 100%;
   }
-  
-  .movie-card h2 {
-    margin-bottom: 1.5rem;
-    font-size: 18px;
-    text-align: center;
-  }
-  
-  .movie-card .rating {
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    color: #ff9900;
-  }
-  
-  .movie-card .movie-details-link {
-    background-color: #f7d354;
-    border: 2px solid #f7d354;
-    border-radius: 4px;
-    color: #000;
-    padding: 1rem 0.5rem;
-    text-align: center;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  
-  .movie-card .movie-details-link:hover {
-    background-color: transparent;
-    color: #f7d354;
-  }
-  
