@@ -3,6 +3,9 @@ import {useEffect} from "react";
 import {sessionActions} from "../../store/session.ts";
 import {useDispatch} from "react-redux";
 import Loading from "../../components/UI/Loading";
+import {createGuestSession, createSession, getAccountID} from "../../api/Login.ts";
+import {getFavorite, getToWatchList} from "../../api/Account.ts";
+import {listActions} from "../../store/list.ts";
 
 function ApprovedPage() {
     const [queryParameters] = useSearchParams();
@@ -10,62 +13,44 @@ function ApprovedPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!queryParameters.get('request_token')) {
-            createGuestSession();
-        } else {
-            createSession(queryParameters.get('request_token')!);
+        async function fetchSession() {
+            try {
+                if (!queryParameters.get('request_token')) {
+                    const guest_session_id = await createGuestSession();
+                    setSession(null, guest_session_id, true);
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 1000);
+                } else {
+                    const session_id = await createSession(queryParameters.get('request_token')!);
+                    const account_id = await getAccountID(session_id);
+                    setSession(account_id, session_id, false);
+                    const favoriteMovies = await getFavorite(account_id, 'movies');
+                    const favoriteTvShows = await getFavorite(account_id, 'tv');
+                    const toWacthListMovies = await getToWatchList(account_id, 'movies');
+                    const toWacthListTvShows = await getToWatchList(account_id, 'tv');
+                    setLists(favoriteMovies, favoriteTvShows, toWacthListMovies, toWacthListTvShows);
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 1000);
+                }
+            } catch (error) {
+                console.error(error);
+            }
         }
+
+        fetchSession();
     }, []);
 
-    function setSessionId(session_id: string, is_guest: string) {
-        dispatch(sessionActions.login({session_id, is_guest}));
+    function setSession(account_id: string | null, session_id: string, is_guest: boolean) {
+        dispatch(sessionActions.login({account_id, session_id, is_guest}));
     }
 
-    async function createGuestSession() {
-        try {
-            const response = await fetch('https://api.themoviedb.org/3/authentication/guest_session/new', {
-                method: 'GET',
-                headers: {
-                    accept: 'application/json',
-                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxOGQyZTQ3NTkwMTMyOTE1NjZmYzc4ZDhiN2MxNjg2YSIsInN1YiI6IjY1NDJmM2E2ZWQyYWMyMDExZTRiZGZjYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.0iESygWdEhVErVrKxGLP7nbBkIn8Y52CAsqFVYb9lVs'
-                }
-            });
-
-            const resData = await response.json();
-            const {guest_session_id} = resData;
-            setSessionId(guest_session_id, 'guest');
-            setTimeout(() => {
-                navigate('/');
-            }, 1500);
-        } catch (e: any) {
-            throw new Error(e.statusText);
-        }
-    }
-
-    async function createSession(request_token: string) {
-        try {
-            const response = await fetch('https://api.themoviedb.org/3/authentication/session/new', {
-                method: 'POST',
-                headers: {
-                    accept: 'application/json',
-                    'content-type': 'application/json',
-                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxOGQyZTQ3NTkwMTMyOTE1NjZmYzc4ZDhiN2MxNjg2YSIsInN1YiI6IjY1NDJmM2E2ZWQyYWMyMDExZTRiZGZjYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.0iESygWdEhVErVrKxGLP7nbBkIn8Y52CAsqFVYb9lVs'
-                },
-                body: JSON.stringify({request_token: request_token})
-            });
-
-            const resData = await response.json();
-            const {session_id} = resData;
-
-            if (session_id) {
-                setSessionId(session_id, 'user');
-                setTimeout(() => {
-                    navigate('/');
-                }, 1500);
-            }
-        } catch (e: any) {
-            throw new Error(e.statusText);
-        }
+    function setLists(favoriteMovies: any, favoriteTvShows: any, toWacthListMovies: any, toWacthListTvShows: any) {
+        dispatch(listActions.setFavoriteMovies(favoriteMovies.map((movie: any) => movie.id)));
+        dispatch(listActions.setFavoriteTvShows(favoriteTvShows.map((tvShow: any) => tvShow.id)));
+        dispatch(listActions.setToWatchMovies(toWacthListMovies.map((movie: any) => movie.id)));
+        dispatch(listActions.setToWatchTvShows(toWacthListTvShows.map((tvShow: any) => tvShow.id)));
     }
 
     return (

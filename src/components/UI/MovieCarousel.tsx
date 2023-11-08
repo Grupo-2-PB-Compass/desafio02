@@ -1,32 +1,47 @@
-import { Carousel } from 'react-responsive-carousel';
-import MovieCard from '../MovieCard/MovieCard';
+import React from "react";
+//@ts-ignore
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import "@splidejs/splide/dist/css/themes/splide-default.min.css";
+import "./MovieCarousel.module.css";
 
 const imagesURL = import.meta.env.VITE_IMG;
 
 interface Movie {
-    id: number;
-    title: string;
-    poster_path: string;
-    vote_average: number;
-  }
-  
+  id: number;
+  title: string;
+  poster_path: string;
+  vote_average: number;
+}
 
 interface MovieCarouselProps {
   movies: Movie[];
+  category?: string;
 }
 
 const MovieCarousel: React.FC<MovieCarouselProps> = ({ movies }) => {
+  const splideOptions = {
+    type: "loop",
+    perPage: 10,
+    gap: "1rem",
+  };
+
   return (
-    <Carousel showArrows={true}>
-      {movies.map((movie) => (
-        <div key={movie.id}>
-            <img src={imagesURL + movie.poster_path} alt={movie.title}/>
-          <MovieCard movie={movie} showLink={false} />
-        </div>
-      ))}
-    </Carousel>
+    <div className="catalogo">
+      <Splide options={splideOptions}>
+        {movies.map((movie) => (
+          <SplideSlide key={movie.id}>
+            <div className="carousel-card">
+              <img
+                src={imagesURL + movie.poster_path}
+                alt=""
+                className="carousel-image"
+              />
+            </div>
+          </SplideSlide>
+        ))}
+      </Splide>
+    </div>
   );
 };
 
 export default MovieCarousel;
-

@@ -1,20 +1,20 @@
+import Menu from "../../components/Menu";
+import classes from "./Home.module.css";
+import Highlight from "../../components/Highlight/Highlight.tsx";
 import {useEffect, useState} from "react";
-import {MovieProps} from "../Movies";
+import Background from "../../components/UI/Background.tsx";
+import Loading from "../../components/UI/Loading.tsx";
 import {getPopular} from "../../api/Lists.ts";
 import {chooseItem} from "../../utils/Lists.ts";
 import {getDetails} from "../../api/Details.ts";
-import Loading from "../../components/UI/Loading.tsx";
-import Background from "../../components/UI/Background.tsx";
-import Menu from "../../components/Menu";
-import Highlight from "../../components/Highlight/Highlight.tsx";
-import classes from "../Home/Home.module.css";
+import {MovieProps} from "../Movies";
 
-function Actors(){
-    const [isLoading, setIsLoading] = useState(false);
+function Home() {
     const [movie, setMovie] = useState({} as MovieProps);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        document.title = "Celebridades"
+        document.title = "Início"
         requestHighlitedMovie();
     }, []);
 
@@ -57,4 +57,4 @@ function Actors(){
     )
 }
 
-export default Actors;
+export default Home;
